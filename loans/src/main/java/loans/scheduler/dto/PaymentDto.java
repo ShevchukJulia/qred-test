@@ -1,4 +1,4 @@
-package loans.dto;
+package loans.scheduler.dto;
 
 import lombok.Data;
 
@@ -6,16 +6,14 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
-public class ScheduleItem {
+public class PaymentDto {
 
-    private Integer number;
+    private Long paymentId;
 
     private LocalDate termDate;
 
     private BigDecimal principal;
 
     private BigDecimal commission;
-
-    private String currency;
 
 }

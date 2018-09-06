@@ -1,3 +1,8 @@
 server:
   servlet:
     contextPath: /api
+
+  port: 8090
+
+scheduler:
+  url: http://shceduler-app:8091/api/scheduler

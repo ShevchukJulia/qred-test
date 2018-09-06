@@ -1,9 +1,9 @@
 package loans.service;
 
-import loans.dto.ScheduledLoan;
+import loans.scheduler.dto.SchedulerDto;
+import loans.dto.ScheduledLoanResponseDto;
 import loans.persistance.model.Loan;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface LoanService {
@@ -16,8 +16,10 @@ public interface LoanService {
 
     Loan rejectLoan(Long id);
 
-    Loan validateLoan(Long id, BigDecimal interestRate);
+    Loan validateLoan(Long id, Double interestRate);
 
-    ScheduledLoan confirmLoan(Long id);
+    ScheduledLoanResponseDto confirmLoan(Long id);
+
+    SchedulerDto findScheduler(Long id);
 
 }

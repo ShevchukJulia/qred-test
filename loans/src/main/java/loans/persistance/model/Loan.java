@@ -1,5 +1,6 @@
 package loans.persistance.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -22,7 +23,8 @@ public class Loan {
     @NotNull
     private BigDecimal amount;
 
-    private String currency;
+    @Enumerated
+    private Currency currency;
 
     @NotNull
     @Column(name = "company_id")
@@ -56,6 +58,9 @@ public class Loan {
     private LocalDateTime creationTime;
 
     @Column(name = "interest_rate")
-    private Float interestRate;
+    private Double interestRate;
+
+    @Column(name = "scheduler_id")
+    private Long schedulerId;
 
 }

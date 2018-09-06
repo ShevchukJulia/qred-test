@@ -17,15 +17,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"amount\": 334000,\n    \"companyId\": 3,\n    \"email\": \"jj@gmail.com\",\n    \"phone\": 343443345,\n    \"turnover\": 10,\n    \"term\": null,\n    \"companyName\": \"jkjkhk\",\n    \"companyType\": null\n}"
+					"raw": "{\n    \"amount\": 1000,\n    \"companyId\": 6,\n    \"email\": \"jj@gmail.com\",\n    \"phone\": 343443345,\n    \"turnover\": 500000,\n    \"term\": null,\n    \"companyName\": \"jkjkhk\",\n    \"companyType\": null\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/loans",
+					"raw": "http://localhost:8090/api/loans",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8090",
 					"path": [
 						"api",
 						"loans"
@@ -41,12 +41,12 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/api/loans",
+					"raw": "http://localhost:8090/api/loans",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8090",
 					"path": [
 						"api",
 						"loans"
@@ -84,12 +84,12 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/api/loans/1/reject",
+					"raw": "http://localhost:8090/api/loans/1/reject",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8090",
 					"path": [
 						"api",
 						"loans",
@@ -107,12 +107,12 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/api/loans/1/validate?interest_rate=15",
+					"raw": "http://localhost:8090/api/loans/1/validate?interest_rate=15",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8090",
 					"path": [
 						"api",
 						"loans",
@@ -136,17 +136,40 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/api/loans/1/confirm",
+					"raw": "http://localhost:8090/api/loans/1/confirm",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8090",
 					"path": [
 						"api",
 						"loans",
 						"1",
 						"confirm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find scheduler by loan id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/api/loans/3/scheduler",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"loans",
+						"3",
+						"scheduler"
 					]
 				}
 			},

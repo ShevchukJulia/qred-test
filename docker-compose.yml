@@ -1,0 +1,28 @@
+version: "3.1"
+services:
+  loans-app:
+    image: qred-test/loans
+    depends_on:
+      - shceduler-app
+    ports:
+      - "8090:8090"
+    restart: always
+    build:
+      context: ./loans
+      dockerfile: Dockerfile
+    working_dir: /loans
+    volumes:
+      - ./loans:/app
+
+  shceduler-app:
+    image: qread-test/scheduler
+    ports:
+      - "8091"
+    restart: always
+    build:
+      context: ./scheduler
+      dockerfile: Dockerfile
+    working_dir: /scheduler
+    volumes:
+      - ./scheduler:/app
+      
