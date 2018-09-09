@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import static loans.persistance.model.CompanyStatus.ACTIVE;
 import static loans.persistance.model.CompanyStatus.BLOCKED;
-import static loans.persistance.model.CompanyType.HOLDING_COMPANY;
+import static loans.persistance.model.CompanyType.LIMITED_PARTNERSHIP;
 import static loans.persistance.model.CompanyType.LTD;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
@@ -57,14 +57,14 @@ public class CompanyServiceImplTest {
         when(companyRepository.findById(id)).thenReturn(Optional.of(company));
 
         company.setName(name);
-        company.setType(HOLDING_COMPANY);
+        company.setType(LIMITED_PARTNERSHIP);
 
         Company actualCompany = service.saveAsActive(company);
 
         assertTrue(actualCompany.getId().equals(id));
         assertTrue(actualCompany.getStatus().equals(ACTIVE));
         assertTrue(actualCompany.getName().equals(name));
-        assertTrue(actualCompany.getType().equals(HOLDING_COMPANY));
+        assertTrue(actualCompany.getType().equals(LIMITED_PARTNERSHIP));
     }
 
     @Test

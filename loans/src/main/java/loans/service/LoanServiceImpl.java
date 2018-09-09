@@ -174,7 +174,7 @@ public class LoanServiceImpl implements LoanService {
 
     private void checkStatus(Loan loan, LoanStatus status) {
         if (loan.getStatus() != status) {
-            String message = MessageFormat.format("Loan with id {0} has invalid status {1}, should be {2}",
+            String message = MessageFormat.format("Loan with id {0} has status {1}, should be {2}",
                     loan.getId(), loan.getStatus(), status.name());
             log.error(message);
             throw new InvalidDataException(message);
