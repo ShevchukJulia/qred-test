@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface LoanRepository extends CrudRepository<Loan, Long> {
 
-    List<Loan> findByCreationTimeBetweenAndCompanyId(LocalDateTime from, LocalDateTime to, Integer companyId);
+    List<Loan> findByCreationTimeBetweenAndCompanyId(LocalDateTime from, LocalDateTime to, Long companyId);
 
 }

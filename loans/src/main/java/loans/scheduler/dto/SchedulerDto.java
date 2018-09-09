@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class SchedulerDto {
 
-    private Long schedulerId;
+    private Long id;
 
     private BigDecimal totalPrinciple;
 

@@ -1,7 +1,7 @@
 package loans.persistance.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -12,23 +12,20 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Loan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "loan_id")
-    private Long loanId;
+    private Long id;
 
     @NotNull
     private BigDecimal amount;
 
     @Enumerated
     private Currency currency;
-
-    @NotNull
-    @Column(name = "company_id")
-    private Integer companyId;
 
     @NotNull
     @Email
@@ -40,13 +37,6 @@ public class Loan {
     private BigDecimal turnover;
 
     private Integer term;
-
-    @Column(name = "company_name")
-    private String companyName;
-
-    @Column(name = "company_type")
-    @Enumerated(EnumType.STRING)
-    private CompanyType companyType;
 
     private LoanStatus status;
 
@@ -60,7 +50,8 @@ public class Loan {
     @Column(name = "interest_rate")
     private Double interestRate;
 
-    @Column(name = "scheduler_id")
-    private Long schedulerId;
-
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 }

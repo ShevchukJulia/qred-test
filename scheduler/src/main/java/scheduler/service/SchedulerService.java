@@ -5,9 +5,7 @@ import scheduler.persistance.model.Scheduler;
 
 public interface SchedulerService {
 
-    Scheduler create(LoanDto loanDto);
-
-    Scheduler findById(Long id);
+    Scheduler save(LoanDto loanDto);
 
     Scheduler findByLoanId(Long id);
 

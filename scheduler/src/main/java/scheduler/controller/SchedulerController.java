@@ -23,12 +23,7 @@ public class SchedulerController {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Scheduler createScheduler(@RequestBody @Valid LoanDto loan) {
-        return service.create(loan);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, path = "/{id}")
-    public Scheduler getSchedulerById(@PathVariable Long id) {
-        return service.findById(id);
+        return service.save(loan);
     }
 
     @RequestMapping(method = RequestMethod.GET)

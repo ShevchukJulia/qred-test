@@ -10,7 +10,7 @@ public enum LoanStatus {
     @JsonProperty("confirmed")
     CONFIRMED,
 
-    @JsonProperty("validated")
+    @JsonProperty("valid")
     VALID,
 
     @JsonProperty("invalid")

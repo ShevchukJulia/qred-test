@@ -1,5 +1,7 @@
 package scheduler.service;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import scheduler.dto.LoanDto;
 import scheduler.exception.ItemNotFoundException;
@@ -12,9 +14,11 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.math.BigDecimal.ROUND_HALF_EVEN;
 
+@Slf4j
 @Service
 public class SchedulerServiceImpl implements SchedulerService {
     private static final Integer ROUND_SCALE = 2;
@@ -22,44 +26,57 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     private SchedulerRepository schedulerRepository;
 
+    @Autowired
     public SchedulerServiceImpl(SchedulerRepository schedulerRepository) {
         this.schedulerRepository = schedulerRepository;
     }
 
     @Override
-    public Scheduler create(LoanDto loanDto) {
-        Scheduler scheduler = new Scheduler();
-        scheduler.setTotalPrinciple(loanDto.getAmount());
-        scheduler.setCurrency(loanDto.getCurrency());
-        scheduler.setLoanId(loanDto.getLoanId());
+    public Scheduler save(LoanDto loanDto) {
+        Optional<Scheduler> scheduler = schedulerRepository.findByLoanId(loanDto.getId());
 
-        List<Payment> payments = createPayments(loanDto, scheduler);
-        scheduler.setPayments(payments);
+        if (scheduler.isPresent()) {
+            Scheduler updatedScheduler = schedulerRepository.save(updateScheduler(scheduler.get(), loanDto));
+            log.info("Scheduler for loan with id {} was updated", loanDto.getId());
+            return updatedScheduler;
+        }
 
-        BigDecimal totalCommission = calculateCommission(loanDto).multiply(BigDecimal.valueOf(loanDto.getTerm()));
-        scheduler.setTotalCommission(totalCommission);
-
-        return schedulerRepository.save(scheduler);
-    }
-
-    @Override
-    public Scheduler findById(Long id) {
-        return schedulerRepository.findById(id)
-                .orElseThrow(() -> new ItemNotFoundException(
-                        MessageFormat.format("Scheduler with id {0} does not exist", id)));
+        return schedulerRepository.save(createScheduler(loanDto));
     }
 
     @Override
     public Scheduler findByLoanId(Long id) {
-        return schedulerRepository.findByLoanId(id)
-                .orElseThrow(() -> new ItemNotFoundException(
-                        MessageFormat.format("Scheduler with loan id {0} does not exist", id)));
+        Optional<Scheduler> scheduler = schedulerRepository.findByLoanId(id);
+        if (!scheduler.isPresent()) {
+            String message = MessageFormat.format("Scheduler with loan id {0} does not exist", id);
+            log.error(message);
+            throw new ItemNotFoundException(message);
+        }
+        return scheduler.get();
+    }
+
+    private Scheduler createScheduler(LoanDto loanDto) {
+        Scheduler scheduler = new Scheduler();
+        scheduler.setTotalPrinciple(loanDto.getAmount());
+        scheduler.setCurrency(loanDto.getCurrency());
+        scheduler.setLoanId(loanDto.getId());
+        scheduler.setTotalCommission(calculateTotalCommission(loanDto));
+
+        List<Payment> payments = createPayments(loanDto, scheduler);
+        scheduler.setPayments(payments);
+        return scheduler;
+    }
+
+    private Scheduler updateScheduler(Scheduler scheduler, LoanDto loanDto) {
+        scheduler.setTotalCommission(calculateTotalCommission(loanDto));
+
+        updatePayments(loanDto, scheduler);
+        return scheduler;
     }
 
     private List<Payment> createPayments(LoanDto loanDto, Scheduler scheduler) {
         BigDecimal commission = calculateCommission(loanDto);
-        BigDecimal principal = loanDto.getAmount()
-                .divide(BigDecimal.valueOf(loanDto.getTerm()), ROUND_SCALE, ROUND_HALF_EVEN);
+        BigDecimal principal = calculatePrincipal(loanDto);
         List<Payment> payments = new ArrayList<>();
 
         for (int i = 0; i < loanDto.getTerm(); i++) {
@@ -76,10 +93,24 @@ public class SchedulerServiceImpl implements SchedulerService {
         return payments;
     }
 
+    private void updatePayments(LoanDto loanDto, Scheduler scheduler) {
+        BigDecimal commission = calculateCommission(loanDto);
+        scheduler.getPayments().forEach(item -> item.setCommission(commission));
+    }
+
+    private BigDecimal calculatePrincipal(LoanDto loanDto) {
+        return loanDto.getAmount()
+                .divide(BigDecimal.valueOf(loanDto.getTerm()), ROUND_SCALE, ROUND_HALF_EVEN);
+    }
+
     private BigDecimal calculateCommission(LoanDto loanDto)  {
         return loanDto.getAmount()
                 .multiply(BigDecimal.valueOf(loanDto.getInterestRate()))
                 .divide(BigDecimal.valueOf(PERCENT), ROUND_SCALE, ROUND_HALF_EVEN);
+    }
+
+    private BigDecimal calculateTotalCommission(LoanDto loanDto) {
+        return calculateCommission(loanDto).multiply(BigDecimal.valueOf(loanDto.getTerm()));
     }
 
 }

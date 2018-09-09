@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Data
 public class PaymentDto {
 
-    private Long paymentId;
+    private Long id;
 
     private LocalDate termDate;
 

@@ -17,7 +17,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"amount\": 1000,\n    \"companyId\": 6,\n    \"email\": \"jj@gmail.com\",\n    \"phone\": 343443345,\n    \"turnover\": 500000,\n    \"term\": null,\n    \"companyName\": \"jkjkhk\",\n    \"companyType\": null\n}"
+					"raw": "{\n    \"amount\": 15000,\n    \"email\": \"best.company@gmail.com\",\n    \"phone\": \"343-449-3345\",\n    \"turnover\": 500000,\n    \"company\": {\n    \t\"id\": 12,\n    \t\"name\": \"The Best Company\",\n    \t\"type\": \"LTD\"\n\n    }\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8090/api/loans",
@@ -62,12 +62,12 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/api/loans/1",
+					"raw": "http://localhost:8090/api/loans/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8090",
 					"path": [
 						"api",
 						"loans",
@@ -159,7 +159,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8090/api/loans/3/scheduler",
+					"raw": "http://localhost:8090/api/loans/1/scheduler",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -168,7 +168,7 @@
 					"path": [
 						"api",
 						"loans",
-						"3",
+						"1",
 						"scheduler"
 					]
 				}

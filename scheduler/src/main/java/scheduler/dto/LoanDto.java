@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class LoanDto {
 
     @NotNull
-    private Long loanId;
+    private Long id;
 
     @NotNull
     private BigDecimal amount;
