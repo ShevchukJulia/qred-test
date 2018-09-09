@@ -3,7 +3,7 @@ package loans.service;
 import loans.persistance.model.Company;
 import loans.persistance.model.CompanyStatus;
 import loans.persistance.repository.CompanyRepository;
-import loans.web.exception.InvalidDataException;
+import loans.web.exception.ItemNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +43,7 @@ public class CompanyServiceImpl implements CompanyService {
         if (!companyOptional.isPresent()) {
             String message = MessageFormat.format("Company with id {0} does not exist", company.getId());
             log.error(message);
-            throw new InvalidDataException(message);
+            throw new ItemNotFoundException(message);
         }
         Company companyToSave = companyOptional.get();
         companyToSave.setStatus(CompanyStatus.BLOCKED);

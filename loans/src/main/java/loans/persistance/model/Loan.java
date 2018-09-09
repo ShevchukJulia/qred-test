@@ -1,5 +1,6 @@
 package loans.persistance.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,7 +25,7 @@ public class Loan {
     @NotNull
     private BigDecimal amount;
 
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     private Currency currency;
 
     @NotNull
@@ -38,6 +39,7 @@ public class Loan {
 
     private Integer term;
 
+    @Enumerated(value = EnumType.STRING)
     private LoanStatus status;
 
     @Column(name = "confirmation_date")

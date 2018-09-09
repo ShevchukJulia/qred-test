@@ -132,7 +132,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public SchedulerDto findScheduler(Long id) {
+    public SchedulerDto findSchedulerByLoanId(Long id) {
         Loan loan = getById(id);
         checkStatus(loan, LoanStatus.CONFIRMED);
 
@@ -150,7 +150,7 @@ public class LoanServiceImpl implements LoanService {
             loan.setTerm(DEFAULT_TERM);
         }
 
-        if (loan.getTerm() <= MIN_TERM && loan.getTerm() >= MAX_TERM) {
+        if (loan.getTerm() < MIN_TERM || loan.getTerm() > MAX_TERM) {
             String invalidTermMessage = "Invalid loan. Term should be in the range from 1 to 12";
             log.error(invalidTermMessage);
             throw new InvalidDataException(invalidTermMessage);

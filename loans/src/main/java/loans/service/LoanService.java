@@ -20,6 +20,6 @@ public interface LoanService {
 
     ScheduledLoanResponseDto confirmLoan(Long id);
 
-    SchedulerDto findScheduler(Long id);
+    SchedulerDto findSchedulerByLoanId(Long id);
 
 }

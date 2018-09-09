@@ -1,8 +1,8 @@
 package loans.web.controller;
 
-import loans.scheduler.dto.SchedulerDto;
 import loans.dto.ScheduledLoanResponseDto;
 import loans.persistance.model.Loan;
+import loans.scheduler.dto.SchedulerDto;
 import loans.service.LoanService;
 import loans.service.LoanServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +56,7 @@ public class LoanController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}/scheduler")
     public SchedulerDto getSchedulerByLoanId(@PathVariable Long id) {
-        return loanService.findScheduler(id);
+        return loanService.findSchedulerByLoanId(id);
     }
 
 }
